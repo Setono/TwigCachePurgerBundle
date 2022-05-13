@@ -17,8 +17,7 @@
         "symfony/filesystem": "^4.4 || ^5.4 || ^6.0",
         "symfony/http-kernel": "^4.4 || ^5.4 || ^6.0",
         "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0",
-        "twig/twig": "^2.0 || ^3.0",
-        "webmozart/assert": "^1.10"
+        "twig/twig": "^2.0 || ^3.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-dependency-injection-test": "^4.3",
