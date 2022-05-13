@@ -1,6 +1,6 @@
 {
-    "name": "setono/twig-purge-cache-bundle",
-    "description": "A Symfony bundle that integrates 'prerender' services, i.e. rendertron or prerender.io",
+    "name": "setono/twig-cache-purger-bundle",
+    "description": "A Symfony bundle that allows you to purge single templates in the Twig cache",
     "license": "MIT",
     "type": "symfony-bundle",
     "authors": [
