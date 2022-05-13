@@ -15,6 +15,6 @@
         "string",
         "true",
         "void",
-        "opcache_invalidate",
+        "opcache_invalidate"
     ]
 }
