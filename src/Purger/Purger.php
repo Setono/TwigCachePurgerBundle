@@ -6,6 +6,9 @@ namespace Setono\TwigCachePurgerBundle\Purger;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 final class Purger implements PurgerInterface
 {
@@ -21,8 +24,14 @@ final class Purger implements PurgerInterface
 
     public function purge(string $name): void
     {
+        try {
+            $templateWrapper = $this->twig->load($name);
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            return;
+        }
+
         /** @psalm-suppress InternalMethod */
-        $reflectionClass = new \ReflectionClass($this->twig->load($name)->unwrap());
+        $reflectionClass = new \ReflectionClass($templateWrapper->unwrap());
         $filename = $reflectionClass->getFileName();
         if (false === $filename) {
             return;
