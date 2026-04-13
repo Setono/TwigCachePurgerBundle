@@ -30,7 +30,6 @@ final class Purger implements PurgerInterface
             return;
         }
 
-        /** @psalm-suppress InternalMethod */
         $reflectionClass = new \ReflectionClass($templateWrapper->unwrap());
         $filename = $reflectionClass->getFileName();
         if (false === $filename) {
@@ -41,7 +40,6 @@ final class Purger implements PurgerInterface
         if (\function_exists('opcache_invalidate') && filter_var(ini_get('opcache.enable'), \FILTER_VALIDATE_BOOLEAN)) {
             @opcache_invalidate($filename, true);
         } elseif (\function_exists('apc_compile_file')) {
-            /** @psalm-suppress UnusedFunctionCall */
             apc_compile_file($filename);
         }
 

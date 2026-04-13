@@ -22,7 +22,7 @@ jobs:
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -53,25 +53,20 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
                     - "8.1"
+                    - "8.2"
+                    - "8.3"
 
                 dependencies:
                     - "highest"
 
                 symfony:
-                    - "^4.4"
-                    - "^5.4"
                     - "^6.0"
-
-                exclude:
-                    -   php-version: "7.4"
-                        symfony: "^6.0"
+                    - "^7.0"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -102,25 +97,20 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
                     - "8.1"
+                    - "8.2"
+                    - "8.3"
 
                 dependencies:
                     - "highest"
 
                 symfony:
-                    - "^4.4"
-                    - "^5.4"
                     - "^6.0"
-
-                exclude:
-                    -   php-version: "7.4"
-                        symfony: "^6.0"
+                    - "^7.0"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -138,7 +128,7 @@ jobs:
                     SYMFONY_REQUIRE: "${{ matrix.symfony }}"
 
             -   name: "Static analysis"
-                run: "vendor/bin/psalm --php-version=${{ matrix.php-version }}"
+                run: "composer analyse"
 
     unit-tests:
         name: "Unit tests"
@@ -148,26 +138,21 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
                     - "8.1"
+                    - "8.2"
+                    - "8.3"
 
                 dependencies:
                     - "lowest"
                     - "highest"
 
                 symfony:
-                    - "^4.4"
-                    - "^5.4"
                     - "^6.0"
-
-                exclude:
-                    -   php-version: "7.4"
-                        symfony: "^6.0"
+                    - "^7.0"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -195,14 +180,14 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "8.1"
+                    - "8.3"
 
                 dependencies:
                     - "highest"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
