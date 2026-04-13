@@ -14,8 +14,9 @@ jobs:
 
         strategy:
             matrix:
+                # Use the minimum supported PHP version to avoid style fixes that require a newer PHP version
                 php-version:
-                    - "8.4"
+                    - "8.2"
 
                 dependencies:
                     - "highest"
