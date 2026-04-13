@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\TwigCachePurgerBundle\Tests\Purger;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Setono\TwigCachePurgerBundle\Purger\Purger;
 use Symfony\Component\Filesystem\Filesystem;
@@ -11,14 +13,10 @@ use Twig\Cache\FilesystemCache;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-/**
- * @covers \Setono\TwigCachePurgerBundle\Purger\Purger
- */
+#[CoversClass(Purger::class)]
 final class PurgerTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function it_purges(): void
     {
         $templateName = 'template.html.twig';
@@ -27,8 +25,8 @@ final class PurgerTest extends TestCase
         $cache = new FilesystemCache(__DIR__ . '/templates/cache');
         $twig = new Environment($loader, ['cache' => $cache]);
 
-        /** @psalm-suppress InternalMethod */
         $cachedTemplateFile = (new \ReflectionClass($twig->load($templateName)->unwrap()))->getFileName();
+        self::assertIsString($cachedTemplateFile);
 
         self::assertFileExists($cachedTemplateFile);
         self::assertSame('hej', trim($twig->render($templateName)));

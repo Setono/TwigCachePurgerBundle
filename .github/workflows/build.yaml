@@ -14,15 +14,16 @@ jobs:
 
         strategy:
             matrix:
+                # Use the minimum supported PHP version to avoid style fixes that require a newer PHP version
                 php-version:
-                    - "8.1"
+                    - "8.2"
 
                 dependencies:
                     - "highest"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v5"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -32,7 +33,7 @@ jobs:
                     coverage: "none"
 
             -   name: "Install composer dependencies"
-                uses: "ramsey/composer-install@v2"
+                uses: "ramsey/composer-install@v3"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -53,25 +54,20 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
 
                 dependencies:
                     - "highest"
 
                 symfony:
-                    - "^4.4"
-                    - "^5.4"
                     - "^6.0"
-
-                exclude:
-                    -   php-version: "7.4"
-                        symfony: "^6.0"
+                    - "^7.0"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v5"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -82,7 +78,7 @@ jobs:
                     tools: "composer-require-checker, composer-unused, flex"
 
             -   name: "Install composer dependencies"
-                uses: "ramsey/composer-install@v2"
+                uses: "ramsey/composer-install@v3"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                 env:
@@ -102,25 +98,20 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
 
                 dependencies:
                     - "highest"
 
                 symfony:
-                    - "^4.4"
-                    - "^5.4"
                     - "^6.0"
-
-                exclude:
-                    -   php-version: "7.4"
-                        symfony: "^6.0"
+                    - "^7.0"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v5"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -131,14 +122,14 @@ jobs:
                     tools: "flex"
 
             -   name: "Install composer dependencies"
-                uses: "ramsey/composer-install@v2"
+                uses: "ramsey/composer-install@v3"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                 env:
                     SYMFONY_REQUIRE: "${{ matrix.symfony }}"
 
             -   name: "Static analysis"
-                run: "vendor/bin/psalm --php-version=${{ matrix.php-version }}"
+                run: "composer analyse"
 
     unit-tests:
         name: "Unit tests"
@@ -148,26 +139,21 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
 
                 dependencies:
                     - "lowest"
                     - "highest"
 
                 symfony:
-                    - "^4.4"
-                    - "^5.4"
                     - "^6.0"
-
-                exclude:
-                    -   php-version: "7.4"
-                        symfony: "^6.0"
+                    - "^7.0"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v5"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -178,7 +164,7 @@ jobs:
                     tools: "flex"
 
             -   name: "Install composer dependencies"
-                uses: "ramsey/composer-install@v2"
+                uses: "ramsey/composer-install@v3"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
                 env:
@@ -195,14 +181,14 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "8.1"
+                    - "8.4"
 
                 dependencies:
                     - "highest"
 
         steps:
             -   name: "Checkout"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v5"
 
             -   name: "Setup PHP, with composer and extensions"
                 uses: "shivammathur/setup-php@v2"
@@ -210,14 +196,17 @@ jobs:
                     coverage: "pcov"
                     extensions: "${{ env.PHP_EXTENSIONS }}"
                     php-version: "${{ matrix.php-version }}"
+                    tools: "flex"
 
             -   name: "Set up problem matchers for phpunit/phpunit"
                 run: "echo \"::add-matcher::${{ runner.tool_cache }}/phpunit.json\""
 
             -   name: "Install composer dependencies"
-                uses: "ramsey/composer-install@v2"
+                uses: "ramsey/composer-install@v3"
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
+                env:
+                    SYMFONY_REQUIRE: "^7.0"
 
             -   name: "Collect code coverage with pcov and phpunit/phpunit"
                 run: "vendor/bin/phpunit --coverage-clover=.build/logs/clover.xml"

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Setono\TwigCachePurgerBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use Setono\TwigCachePurgerBundle\DependencyInjection\SetonoTwigCachePurgerExtension;
 use Setono\TwigCachePurgerBundle\Purger\PurgerInterface;
 
-/**
- * @covers \Setono\TwigCachePurgerBundle\DependencyInjection\SetonoTwigCachePurgerExtension
- */
+#[CoversClass(SetonoTwigCachePurgerExtension::class)]
 final class SetonoTwigCachePurgerExtensionTest extends AbstractExtensionTestCase
 {
     protected function getContainerExtensions(): array
@@ -20,9 +20,7 @@ final class SetonoTwigCachePurgerExtensionTest extends AbstractExtensionTestCase
         ];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_registers_services(): void
     {
         $this->load();
